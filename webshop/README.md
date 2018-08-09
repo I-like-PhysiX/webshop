@@ -1,4 +1,4 @@
-# webshop
+# webshop frontend
 
 > A Vue.js project
 
