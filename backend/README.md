@@ -16,6 +16,6 @@ npm i nodemon
 
 # copy the necessary code to the right place
 
-# the app is listening on port 3000
+# the app is listening on localhost:3000
 nodemon node index.js
 ```
