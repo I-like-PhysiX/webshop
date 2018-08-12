@@ -265,9 +265,9 @@ export default {
     axios.get('http://localhost:3000')
       .then((res) =>{
         this.tomb = res.data;
-    }).then((res) =>{
+    }).then(() =>{
         this.create_selection();
-    }).then((res) =>{
+    }).then(() =>{
         this.init();
     })
       .catch((error) => {
