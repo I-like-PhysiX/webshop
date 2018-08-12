@@ -278,18 +278,14 @@ export default {
 
   computed: {
     pageCount(){
-      var l = this.szurttomb.length;
-      var s = this.size;
-      if (l<=s){
+      if (this.szurttomb.length<=this.size){
         return 0;
       } else {
-        return Math.floor(l/s);
+        return Math.floor(this.szurttomb.length/this.size);
       }
     },
     paginatedData(){
-      var start = this.pageNumber * this.size;
-      var end = start + this.size;
-      return this.szurttomb.slice(start, end);
+      return this.szurttomb.slice(this.pageNumber * this.size, this.pageNumber * this.size + this.size);
     },
     osszeg() {
       return Math.round(this.rendeles.reduce((o,v)=>o+v.egysar*v.alap,0)/5)*5;
