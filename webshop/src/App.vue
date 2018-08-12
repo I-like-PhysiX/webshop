@@ -135,12 +135,6 @@ export default {
     }
   },
   watch: {
-     tomb(val){
-       if (val) {
-         this.init();
-         this.create_selection();
-       }
-     },
      search (val) {
        if (val) {
          this.searchstate = true;
@@ -271,9 +265,13 @@ export default {
     axios.get('http://localhost:3000')
       .then((res) =>{
         this.tomb = res.data;
+    }).then((res) =>{
+        this.create_selection();
+    }).then((res) =>{
+        this.init();
     })
-    .catch((error) => {
-      console.log(error);
+      .catch((error) => {
+        console.log(error);
     });
     console.log("App init");
   },
