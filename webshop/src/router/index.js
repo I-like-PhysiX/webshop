@@ -10,20 +10,11 @@ export default new Router({
   mode:'history',
   routes: [
             {
-              path: '/:pageNumber',
-              name: 'fooldal',
-              component: termekek
+              path: '/',
+              component: termekek,
+              alias: '/kereses/:search/',
+              alias: '/:selected/:sortType/'
             },
-            {
-              path: '/kereses/:search/:pageNumber',
-              name: 'kereses',
-              component: termekek
-           },
-           {
-              path: '/:selected/:sortType/:pageNumber',
-              name: 'kategoria',
-              component: termekek
-           },
            {
               path: '/kosar',
               name: 'kosar',
