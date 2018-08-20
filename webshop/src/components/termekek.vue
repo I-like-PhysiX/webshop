@@ -36,9 +36,9 @@
    </div>
    <div class="text-mid">
      <div class="center" style="text-align: center;">
-       <b-button :disabled="this.pageNumbercopy == 0" v-on:click="$emit('prevPageEvent')"><a href="#termekek"><-</a></b-button>
+       <span v-if="this.pageNumbercopy!=0" class="pagination-btn" v-on:click="$emit('updatepageEvent', -1)" style="cursor: pointer;"> < </span>
        {{this.pageNumbercopy}}/{{this.pageCountcopy}}
-       <b-button :disabled="this.pageNumbercopy > this.pageCountcopy-1" v-on:click="$emit('nextPageEvent')"><a href="#termekek">-></a></b-button>
+       <span v-if="this.pageNumbercopy!=this.pageCountcopy" class="pagination-btn" v-on:click="$emit('updatepageEvent', 1)" style="cursor: pointer;"> > </span>
      </div>
    </div>
  </div>
