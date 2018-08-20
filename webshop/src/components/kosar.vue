@@ -23,14 +23,14 @@
                            v-if="elem.egys=='kg'"
                            v-model="elem.alap">
                            <b-button v-on:click="$emit('removefromcartEvent', elem, 0.1)">-</b-button>
-                           <b-button :disabled="elem.alap == elem.ossz ? true : false" v-on:click="addtocart(elem, 0.1)">+</b-button>
+                           <b-button :disabled="elem.alap == elem.ossz ? true : false" v-on:click="$emit('addtocartEvent', elem, 0.1)">+</b-button>
                            {{elem.alap}} {{elem.egys}}
                     </div>
                     <div
                            v-if="elem.egys!='kg'"
                            v-model="elem.alap">
                            <b-button v-on:click="$emit('removefromcartEvent', elem, 1)">-</b-button>
-                           <b-button :disabled="elem.alap == elem.ossz ? true : false" v-on:click="addtocart(elem, 1)">+</b-button>
+                           <b-button :disabled="elem.alap == elem.ossz ? true : false" v-on:click="$emit('addtocartEvent', elem, 1)">+</b-button>
                            {{elem.alap}} {{elem.egys}}
                     </div>
                   </td>
@@ -42,12 +42,14 @@
               </tbody>
             </table>
           </b-alert>
+          <br>
+          <br>
           <strong>Összesen fizetendő:</strong> <b>{{this.osszegcopy}} Ft</b>
           <br>
           <br>
           <b-button-group class="responsive">
            <b-btn v-on:click="$emit('onCloseEvent')" size="sm" variant="danger" :disabled="rendelescopy==0 ? true : false">Kosár kiürítése</b-btn>
-           <b-btn v-on:click="$emit('datarouterEvent')" size="sm" variant="success" :disabled="rendelescopy==0 ? true : false">Tovább az adatokhoz</b-btn>
+           <b-btn v-on:click="$emit('datarouterEvent')" size="sm" variant="success" :disabled="rendelescopy==0 ? true : false">Adatok</b-btn>
         </b-button-group>
       </div>
     </div>
@@ -79,7 +81,7 @@ export default {
 </script>
 
 <style scoped>
- #termekek{
+ #kosar{
   font-family: courier;
   box-sizing: border-box;
     display: -webkit-box;
@@ -91,7 +93,6 @@ export default {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin: 0 auto;
     min-height: 100vh;
  }
  .main{
