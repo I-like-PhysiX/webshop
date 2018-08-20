@@ -118,8 +118,8 @@ export default {
     },
     hideModal () {
       this.$refs.myModalRef.hide();
-      $emit('initEvent');
-
+      this.$emit('onCloseEvent');
+      this.$emit('initEvent');
     },
     onOk () {
       if (!this.input1) { this.input1state = false; }
@@ -142,7 +142,7 @@ export default {
 </script>
 
 <style scoped>
- #app{
+ #adatok{
   font-family: courier;
   box-sizing: border-box;
     display: -webkit-box;
@@ -154,7 +154,6 @@ export default {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin: 0 auto;
     min-height: 100vh;
  }
  .main{
