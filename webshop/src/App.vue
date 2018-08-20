@@ -10,21 +10,21 @@
                       size="md"
                       variant="dark"
                       style="text-align: center"
-                      v-on:click="init(), search='', sortType='', selected=''">
+                      v-on:click="init()">
                       Webshop
               </b-btn>
             <b-btn
                    class="exPopoverReactive1"
-                   v-on:click="search='', csaktermekek=false, csakkosar=true, basketrouter()"
+                   v-on:click="basketrouter()"
                    v-if="csaktermekek"
                    size="md"
                    variant="dark"
                    style="text-align: center">
-                   {{this.rendeleshossz}} tétel
+                   {{this.rendeles.length}} tétel
              </b-btn>
              <b-btn
                     class="exPopoverReactive1"
-                    v-on:click="onCancel"
+                    v-on:click="onCancel()"
                     v-if="csakkosar"
                     size="md"
                     variant="dark"
@@ -88,8 +88,7 @@
                 v-on:addtocartEvent="addtocart"
                 v-on:removefromcartEvent="removefromcart"
                 v-on:delEvent="del"
-                v-on:nextPageEvent="nextPage"
-                v-on:prevPageEvent="prevPage"
+                v-on:updatepageEvent="updatePage"
                 v-on:onCloseEvent="onClose"
                 v-on:datarouterEvent="datarouter"
                 v-on:initEvent="init"
@@ -115,13 +114,13 @@ export default {
       size: 4,
       itemsPerRow: 1,
       szurttombhossz:0,
-      rendeleshossz: 0,
       csakadatok: false,
       csakkosar: false,
       csakvasarlas: false,
       csaktermekek: true,
       search:'',
       searchstate: null,
+      url:``,
       tomb: [],
       szurttomb: [],
       rendeles: [],
@@ -143,19 +142,13 @@ export default {
      }
    },
   methods: {
-    nextPage(){
-      this.pageNumber++;
-      this.router();
-    },
-    prevPage(){
-      this.pageNumber--;
-      this.router();
+    updatePage(diff){
+      this.pageNumber+=diff;
     },
     addtocart(elem, step){
       elem.alap = Math.round((elem.alap + step) * 10) / 10;
       this.rendeles.push(elem);
       this.rendeles=Array.from(new Set(this.rendeles));
-      this.rendeleshossz=this.rendeles.length;
     },
     removefromcart(elem, step){
       elem.alap = Math.round((elem.alap - step) * 10) / 10;
@@ -166,14 +159,16 @@ export default {
     del(elem){
       elem.alap=0;
       this.rendeles.splice(this.rendeles.indexOf(elem), 1);
-      this.rendeleshossz=this.rendeles.length;
     },
     init(){
       this.szurttomb = this.tomb.filter(v => v.info=="Akció!");
       this.itemsPerRow=this.szurttomb.length;
       this.szurttombhossz=this.szurttomb.length;
+      this.search='';
+      this.sortType='';
+      this.selected='';
       this.onCancel();
-      this.initrouter();
+
     },
     create_selection () {
       let mySet = new Set();
@@ -188,43 +183,50 @@ export default {
     },
     onCancel(){
       this.initrouter();
-      this.search='';
-      this.csakkosar=false;
-      this.csaktermekek=true;
       console.log('Quit cart');
     },
     onClose () {
-      this.rendeles.forEach(v => v.alap=0);
       this.rendeles=[];
       console.log('Reset cart');
     },
     initrouter(){
-      this.$router.push(`/${this.pageNumber}`);
+      this.url=`/`;
+      this.$router.push(this.url);
+      this.csakadatok=false;
+      this.csakkosar=false;
+      this.csaktermekek=true;
     },
     searchrouter(){
-      this.$router.push(`/kereses/${this.search}/${this.pageNumber}`);
+      this.url=`/kereses/`;
+      this.$router.push(this.url);
+      this.csaktermekek=true;
+      this.csakadatok=false
+      this.csakkosar=false;
     },
     categoryrouter(){
-      this.$router.push(`/${this.selected}/${this.sortType+"_szerinti_rendezes"}/${this.pageNumber}`);
+      this.url=`/${this.selected}/${this.sortType+"_szerinti_rendezes"}/`;
+      this.$router.push(this.url);
+      this.csaktermekek=true;
+      this.csakadatok=false
+      this.csakkosar=false;
     },
     basketrouter(){
-      this.$router.push(`/kosar`);
+      this.url=`/kosar`;
+      this.$router.push(this.url);
+      this.search='';
+      this.csaktermekek=false;
+      this.csakadatok=false
+      this.csakkosar=true;
     },
     datarouter(){
-      this.$router.push(`/adatok`);
-    },
-    router(){
-      if(this.selected!="" || this.sortOptions!=""){
-        this.categoryrouter();
-      } else {
-        this.searchrouter();
-      }
+      this.url=`/adatok`;
+      this.$router.push(this.url);
+      this.csakkosar=false;
+      this.csaktermekek=false;
+      this.csakadatok=true
     },
     szur () {
       this.pageNumber=0;
-      this.csakadatok=false
-      this.csakkosar=false;
-      this.csaktermekek=true;
       let szurttomb = this.tomb.filter(v => v.type==this.selected);
       switch (this.sortType) {
           case 'termek':
@@ -241,9 +243,6 @@ export default {
       },
       szur2(){
         this.pageNumber=0;
-        this.csakadatok=false
-        this.csakkosar=false;
-        this.csaktermekek=true;
         if (this.search) {
           this.szurttomb =this.tomb.filter(v => RegExp(this.search,'i').test(v.termek)).slice(0,9);
           this.itemsPerRow=this.szurttomb.length;
