@@ -139,7 +139,7 @@ export default {
        if (val) {
          this.searchstate = true;
        }
-     }
+     },
    },
   methods: {
     updatePage(diff){
@@ -164,6 +164,7 @@ export default {
       this.szurttomb = this.tomb.filter(v => v.info=="Akció!");
       this.itemsPerRow=this.szurttomb.length;
       this.szurttombhossz=this.szurttomb.length;
+      this.pageNumber=0;
       this.search='';
       this.sortType='';
       this.selected='';
@@ -197,7 +198,7 @@ export default {
       this.csaktermekek=true;
     },
     searchrouter(){
-      this.url=`/kereses/`;
+      this.url=`/kereses/${this.search}/`;
       this.$router.push(this.url);
       this.csaktermekek=true;
       this.csakadatok=false
