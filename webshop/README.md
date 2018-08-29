@@ -14,6 +14,7 @@ Use ESLint to lint your code? Y
 -> Standard
 npm i bootstrap-vue
 cd webshop
+npm i axios
 npm install
 
 # copy the necessary code to the right place
