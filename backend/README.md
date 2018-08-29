@@ -9,14 +9,14 @@
 mkdir backend
 cd backend
 npm init
--> entry point: (index.js)
+-> entry point: (server.js)
 npm install express --save
 npm i body-parser
 npm i nodemon
 
 # copy the necessary code to the right place
 
-nodemon node index.js
+nodemon node server.js
 
 # the app is listening on localhost:3000
 ```
