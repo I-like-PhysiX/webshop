@@ -12,8 +12,8 @@ vue init webpack webshop
 Install vue-router? Y
 Use ESLint to lint your code? Y
 -> Standard
-npm i bootstrap-vue
 cd webshop
+npm i bootstrap-vue
 npm i axios
 npm install
 
