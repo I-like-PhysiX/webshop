@@ -50,8 +50,7 @@
          </li>
          <li class="nav-item active">
            <b-form-group
-                         label-for="search"
-                         :state="searchstate">
+                         label-for="search">
              <b-form-input
                            class="form-control"
                            size="md"
@@ -64,11 +63,10 @@
          <li class="nav-item active">
            <b-btn
                          class="exPopoverReactive1"
-                         v-on:click="szur2(), search=''"
+                         v-on:click="szur2()"
                          size="md"
                          variant="dark"
-                         style="text-align: center"
-                         :disabled="this.search === '' ? true : false">
+                         style="text-align: center">
                          Keresés
            </b-btn>
          </li>
@@ -94,7 +92,6 @@
                 v-on:initEvent="init"
                 v-on:basketrouterEvent="basketrouter">
     </router-view>
-
     <b-navbar toggleable="md" variant="dark" class="bottom">
       <div class="footer" style="color:white;  margin: 0px auto;">
         © 2018. Minden jog fenntartva
@@ -119,7 +116,6 @@ export default {
       csakvasarlas: false,
       csaktermekek: true,
       search:'',
-      searchstate: null,
       url:``,
       tomb: [],
       szurttomb: [],
@@ -135,11 +131,7 @@ export default {
     }
   },
   watch: {
-     search (val) {
-       if (val) {
-         this.searchstate = true;
-       }
-     },
+
    },
   methods: {
     updatePage(diff){
@@ -244,11 +236,12 @@ export default {
       },
       szur2(){
         this.pageNumber=0;
-        if (this.search) {
+        if (this.search!="") {
           this.szurttomb =this.tomb.filter(v => RegExp(this.search,'i').test(v.termek)).slice(0,9);
           this.itemsPerRow=this.szurttomb.length;
           this.szurttombhossz=this.szurttomb.length;
           this.searchrouter();
+          this.search="";
         }
       }
   },
