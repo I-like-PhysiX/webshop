@@ -13,64 +13,64 @@
                  v-on:click="hideModal">Bezárás</b-btn>
         </b-modal>
     <div class="container">
-    <div>
-      <b-form-group
-                    label="Név*"
-                    label-for="pop1"
-                    horizontal class="mb-1"
-                    :state="input1state"
-                    invalid-feedback="Kötelező kitölteni!">
-        <b-form-input
-                      type="text"
-                      id="pop1"
-                      size="sm"
-                      v-model="input1"/>
-      </b-form-group>
-      <b-form-group
-                    label="Cím*"
-                    label-for="pop3"
-                    horizontal class="mb-1"
-                    :state="input3state"
-                    invalid-feedback="Kötelező kitölteni!">
-        <b-form-input
-                      type="text"
-                      id="pop3"
-                      size="sm"
-                      v-model="input3"/>
-      </b-form-group>
-      <b-form-group
-                    label="Telefonszám*"
-                    label-for="pop4"
-                    horizontal class="mb-1"
-                    :state="input4state"
-                    invalid-feedback="Kötelező kitölteni!">
-        <b-form-input
-                      type="tel"
-                      id="pop4"
-                      size="sm"
-                      v-model="input4"/>
-      </b-form-group>
-      <b-form-group
-                    label="E-mail cím*"
-                    label-for="pop5"
-                    horizontal class="mb-1"
-                    :state="input5state"
-                    invalid-feedback="Kötelező kitölteni!">
-        <b-form-input
-                      placeholder="példa@email.com"
-                      type="email"
-                      id="pop5"
-                      size="sm"
-                      v-model="input5"/>
-      </b-form-group>
+      <b-form @submit="onSubmit" @reset="onReset">
+        <b-form-group id="exampleInputGroup1"
+                      label="Név: *"
+                      label-for="exampleInput1">
+          <b-form-input id="exampleInput1"
+                        type="text"
+                        v-model="input1"
+                        required
+                        placeholder="Név">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group id="exampleInputGroup2"
+                      label="Cím: *"
+                      label-for="exampleInput2">
+          <b-form-input id="exampleInput2"
+                        type="text"
+                        v-model="input2"
+                        required
+                        placeholder="Cím">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group id="exampleInputGroup3"
+                      label="Telefonszám: *"
+                      label-for="exampleInput3">
+          <b-form-input id="exampleInput3"
+                        type="tel"
+                        v-model="input3"
+                        required
+                        placeholder="0630123456">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group id="exampleInputGroup4"
+                      label="Email cím: *"
+                      label-for="exampleInput4">
+          <b-form-input id="exampleInput4"
+                        type="email"
+                        v-model="input4"
+                        required
+                        placeholder="példa@email.com">
+          </b-form-input>
+        </b-form-group>
+        <b-form-group id="exampleGroup5">
+          <b-form-checkbox-group v-model="checked" id="exampleChecks" required>
+            <p><b-form-checkbox value="GDPR">Egyetértek a <a href="https://www.eugdpr.org/" target="_blank">GDPR</a> feltételeivel. *</b-form-checkbox></p>
+            <p><b-form-checkbox value="ÁSZF">Egyetértek az <a href="http://www.kormany.hu/download/b/db/21000/20170911%20IM%20%C3%81SZF%20felhaszn%C3%A1l%C3%A1si%20felt%C3%A9telek_felhaszn%C3%A1l%C3%A1si%20szerz%C5%91d%C3%A9sek.pdf" target="_blank">ÁSZF</a> feltételeivel. *</b-form-checkbox></p>
+          </b-form-checkbox-group>
+        </b-form-group>
+        <br>
+        <br>
+        <b-button-group class="responsive">
+          <b-btn v-on:click="$emit('basketrouterEvent')" size="sm" variant="primary">Kosár</b-btn>
+          <b-button type="reset" size="sm" variant="danger">Tötlés</b-button>
+          <b-button type="submit" size="sm" variant="success">Vásárlás</b-button>
+        </b-button-group>
+      </b-form>
       <br>
       <br>
-      <b-button-group class="responsive">
-        <b-btn v-on:click="$emit('basketrouterEvent')" size="sm" variant="danger">Kosár</b-btn>
-        <b-btn v-on:click="onOk()" size="sm" variant="success">Vásárlás</b-btn>
-      </b-button-group>
     </div>
-  </div>
 </div>
 </div>
 </template>
@@ -81,38 +81,29 @@ export default {
   data() {
     return {
       input1: '',
-      input1state: null,
+      input2: '',
       input3: '',
-      input3state: null,
       input4: '',
-      input4state: null,
-      input5: '',
-      input5state: null,
+      checked: []
     }
   },
   watch: {
-     input1 (val) {
-       if (val) {
-         this.input1state = true;
-       }
-     },
-     input3 (val) {
-       if (val) {
-         this.input3state = true;
-       }
-     },
-     input4 (val) {
-       if (val) {
-         this.input4state = true;
-       }
-     },
-     input5 (val) {
-       if (val) {
-         this.input5state = true;
-       }
-     },
+
    },
   methods: {
+    onReset (event) {
+      event.preventDefault();
+      this.input1 = '';
+      this.input2 = '';
+      this.input3 = '';
+      this.input4 = '';
+      this.checked = [];
+    },
+    onSubmit (event) {
+      event.preventDefault();
+      console.log('Make API request');
+      this.showModal();
+    },
     showModal () {
       this.$refs.myModalRef.show();
     },
@@ -120,17 +111,7 @@ export default {
       this.$refs.myModalRef.hide();
       this.$emit('onCloseEvent');
       this.$emit('initEvent');
-    },
-    onOk () {
-      if (!this.input1) { this.input1state = false; }
-      if (!this.input3) { this.input3state = false; }
-      if (!this.input4) { this.input4state = false; }
-      if (!this.input5) { this.input5state = false; }
-      if (this.input1 && this.input3 && this.input4 && this.input5) {
-        console.log('Make API request');
-        this.showModal();
-      }
-    },
+    }
   },
   mounted() {
 
