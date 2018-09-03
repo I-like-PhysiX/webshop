@@ -112,7 +112,6 @@ export default {
       itemsPerRow: 1,
       szurttombhossz:0,
       csakkosar: false,
-      csakvasarlas: false,
       csaktermekek: true,
       search:'',
       url:``,
