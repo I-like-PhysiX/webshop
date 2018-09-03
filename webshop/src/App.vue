@@ -25,7 +25,7 @@
              <b-btn
                     class="exPopoverReactive1"
                     v-on:click="onCancel()"
-                    v-if="csakkosar"
+                    v-if="!csaktermekek"
                     size="md"
                     variant="dark"
                     style="text-align: center">
@@ -111,7 +111,6 @@ export default {
       size: 4,
       itemsPerRow: 1,
       szurttombhossz:0,
-      csakkosar: false,
       csaktermekek: true,
       search:'',
       url:``,
@@ -183,27 +182,23 @@ export default {
     initrouter(){
       this.url=`/`;
       this.$router.push(this.url);
-      this.csakkosar=false;
       this.csaktermekek=true;
     },
     searchrouter(){
       this.url=`/kereses/${this.search}/`;
       this.$router.push(this.url);
       this.csaktermekek=true;
-      this.csakkosar=false;
     },
     categoryrouter(){
       this.url=`/${this.selected}/${this.sortType+"_szerinti_rendezes"}/`;
       this.$router.push(this.url);
       this.csaktermekek=true;
-      this.csakkosar=false;
     },
     basketrouter(){
       this.url=`/kosar`;
       this.$router.push(this.url);
       this.search='';
       this.csaktermekek=false;
-      this.csakkosar=true;
     },
     datarouter(){
       this.url=`/adatok`;
