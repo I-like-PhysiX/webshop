@@ -111,7 +111,6 @@ export default {
       size: 4,
       itemsPerRow: 1,
       szurttombhossz:0,
-      csakadatok: false,
       csakkosar: false,
       csakvasarlas: false,
       csaktermekek: true,
@@ -185,7 +184,6 @@ export default {
     initrouter(){
       this.url=`/`;
       this.$router.push(this.url);
-      this.csakadatok=false;
       this.csakkosar=false;
       this.csaktermekek=true;
     },
@@ -193,14 +191,12 @@ export default {
       this.url=`/kereses/${this.search}/`;
       this.$router.push(this.url);
       this.csaktermekek=true;
-      this.csakadatok=false
       this.csakkosar=false;
     },
     categoryrouter(){
       this.url=`/${this.selected}/${this.sortType+"_szerinti_rendezes"}/`;
       this.$router.push(this.url);
       this.csaktermekek=true;
-      this.csakadatok=false
       this.csakkosar=false;
     },
     basketrouter(){
@@ -208,7 +204,6 @@ export default {
       this.$router.push(this.url);
       this.search='';
       this.csaktermekek=false;
-      this.csakadatok=false
       this.csakkosar=true;
     },
     datarouter(){
@@ -216,7 +211,6 @@ export default {
       this.$router.push(this.url);
       this.csakkosar=false;
       this.csaktermekek=false;
-      this.csakadatok=true
     },
     szur () {
       this.pageNumber=0;
